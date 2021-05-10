@@ -11,12 +11,12 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "diary")
+@Table(name = "entries")
 
 public class Entry {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int entryId;
+    private long entryId;
     private String title;
     private String body;
     private LocalDate createdAt;

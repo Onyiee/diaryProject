@@ -11,7 +11,7 @@ import java.time.LocalDate;
 public class EntryDTO {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int entryId;
+    private long entryId;
     private String title;
     private String body;
     private LocalDate createdAt;
