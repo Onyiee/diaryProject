@@ -20,8 +20,6 @@ public class EntryDTO {
         Entry entry = new Entry();
         entry.setTitle(entryDTO.getTitle());
         entry.setBody(entryDTO.getBody());
-        entry.setEntryId(entryDTO.getEntryId());
-        entry.setCreatedAt(entryDTO.getCreatedAt());
         return entry;
     }
 

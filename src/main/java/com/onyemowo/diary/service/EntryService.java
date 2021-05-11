@@ -13,7 +13,8 @@ import java.util.Optional;
 public interface EntryService {
     void createNewEntry (EntryDTO entryDTO);
     void editEntry(EntryDTO entryDTO,long entryId) throws EntryException;
-    void deleteEntryById(long entryId);
-    EntryDTO getEntryById(long entryId);
-    List<EntryDTO> entryBodySearch(String phrase);
+    void deleteEntryById(long entryId) throws EntryException;
+    EntryDTO getEntryById(long entryId) throws EntryException;
+    List<EntryDTO> entryBodySearch(String phrase, int pageNumber) throws EntryException;
+    List<EntryDTO> getAllEntries(int pageNumber);
 }
