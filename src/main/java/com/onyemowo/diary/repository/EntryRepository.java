@@ -12,5 +12,6 @@ import java.util.List;
 @Repository
 public interface EntryRepository extends JpaRepository<Entry, Long> {
     Slice<Entry> findEntryByTitle(String title, Pageable page);
-    Slice<Entry> findEntryByBodyContains(String phrase, Pageable page);
+    Slice<Entry> findEntryByBodyContaining(String phrase, Pageable page);
+
 }

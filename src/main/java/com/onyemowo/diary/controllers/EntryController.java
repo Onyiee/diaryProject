@@ -10,8 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.http.HttpResponse;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/entry/")
@@ -80,14 +80,18 @@ public class EntryController {
     }
 
     @GetMapping("phraseSearch")
-        public ResponseEntity<?> searchByPhrase(@RequestParam("pageNumber") int pageNumber, @RequestParam("phrase") String phrase){
+        public ResponseEntity<?> searchByPhrase(@RequestParam(name = "pageNumber", required = false) Optional<Integer> pageNumber, @RequestParam("phrase") String phrase){
         try {
-            List<EntryDTO> entryDTOS = entryService.entryBodySearch(phrase,pageNumber);
+            int pageNo = pageNumber.orElse(0);
+            List<EntryDTO> entryDTOS = entryService.entryBodySearch(phrase,pageNo);
             return new ResponseEntity<>(entryDTOS, HttpStatus.OK);
         }catch (EntryException entryException){
             ApiResponse apiResponse = new ApiResponse(false,entryException.getMessage());
+
             return new ResponseEntity<>(apiResponse, HttpStatus.BAD_REQUEST);
         }
 
     }
+
+
 }

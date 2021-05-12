@@ -15,26 +15,22 @@ import java.util.List;
 @NoArgsConstructor
 
 public class DiaryDTO {
-    private String title;
     private int diaryId;
-    private String body;
+    private String name;
     private LocalDate createdAt;
     private List<Entry> entries = new ArrayList<>();
 
     public static Diary unpackDto(DiaryDTO diaryDTO){
         Diary diary = new Diary();
-        diary.setDiaryId(diaryDTO.getDiaryId());
-        diary.setBody(diaryDTO.getBody());
-        diary.setTitle(diaryDTO.getTitle());
-        diary.setCreatedAt(diaryDTO.getCreatedAt());
+        diary.setName(diaryDTO.getName());
         return diary;
     }
 
     public static DiaryDTO packDto(Diary diary){
         DiaryDTO diaryDTO = new DiaryDTO();
         diaryDTO.setDiaryId(diary.getDiaryId());
-        diaryDTO.setBody(diary.getBody());
-        diaryDTO.setTitle(diary.getTitle());
+        diaryDTO.setName(diary.getName());
+        diaryDTO.setEntries(diary.getEntries());
         diaryDTO.setCreatedAt(diary.getCreatedAt());
         return diaryDTO;
     }

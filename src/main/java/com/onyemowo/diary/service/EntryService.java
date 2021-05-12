@@ -17,4 +17,5 @@ public interface EntryService {
     EntryDTO getEntryById(long entryId) throws EntryException;
     List<EntryDTO> entryBodySearch(String phrase, int pageNumber) throws EntryException;
     List<EntryDTO> getAllEntries(int pageNumber);
+    Entry internalCreateEntry(EntryDTO entryDTO);
 }

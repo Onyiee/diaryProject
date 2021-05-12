@@ -30,6 +30,13 @@ public class EntryServiceImpl implements EntryService {
     }
 
     @Override
+    public Entry internalCreateEntry(EntryDTO entryDTO) {
+        Entry entry = EntryDTO.unpackDto(entryDTO);
+        entry.setCreatedAt(LocalDate.now());
+        return entryRepository.save(entry);
+    }
+
+    @Override
     public void editEntry(EntryDTO entryDTO, long entryId) throws EntryException {
         Optional<Entry> entry = entryRepository.findById(entryId);
         Entry foundEntry;
@@ -45,9 +52,9 @@ public class EntryServiceImpl implements EntryService {
 
     @Override
     public void deleteEntryById(long entryId) throws EntryException {
-       Entry entry = entryRepository.findById(entryId)
+        Entry entry = entryRepository.findById(entryId)
                 .orElseThrow(
-                        ()-> new EntryException("no entry found with that ID")
+                        () -> new EntryException("no entry found with that ID")
                 );
         entryRepository.delete(entry);
     }
@@ -56,7 +63,7 @@ public class EntryServiceImpl implements EntryService {
     public EntryDTO getEntryById(long entryId) throws EntryException {
         EntryDTO entryDTO = null;
         Optional<Entry> entry = entryRepository.findById(entryId);
-        if(entry.isPresent()){
+        if (entry.isPresent()) {
             entryDTO = EntryDTO.packDto(entry.get());
         } else {
             throw new EntryException("Found no entry with that ID.");
@@ -66,9 +73,10 @@ public class EntryServiceImpl implements EntryService {
 
     @Override
     public List<EntryDTO> entryBodySearch(String phrase, int pageNumber) {
-        int pageContent = 1;
+        System.out.println(pageNumber);
+        int pageContent = 10;
         Pageable page = PageRequest.of(pageNumber, pageContent);
-        Slice<Entry> entry = entryRepository.findEntryByBodyContains(phrase, page);
+        Slice<Entry> entry = entryRepository.findEntryByBodyContaining(phrase, page);
         List<EntryDTO> entries = entry.stream().map(
                 (entryObject) -> {
                     EntryDTO dto = EntryDTO.packDto(entryObject);
@@ -81,15 +89,16 @@ public class EntryServiceImpl implements EntryService {
     @Override
     public List<EntryDTO> getAllEntries(int pageNumber) {
         int pageContent = 2;
-        Pageable page = PageRequest.of(pageNumber,pageContent);
+        Pageable page = PageRequest.of(pageNumber, pageContent);
         Page<Entry> entries = entryRepository.findAll(page);
         List<EntryDTO> allEntries = entries.stream().map(
-                (singleEntry)-> {
+                (singleEntry) -> {
                     EntryDTO entryDTO = EntryDTO.packDto(singleEntry);
                     return entryDTO;
                 }
         ).collect(Collectors.toList());
         return allEntries;
     }
+
 
 }
